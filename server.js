@@ -1,8 +1,10 @@
+require('dotenv').config()
 const path = require('path')
 
 const express = require('express')
 const bodyParser = require('body-parser')
 const expressValidator = require('express-validator')
+const mongoose = require('mongoose')
 
 const ejs = require('ejs')
 
@@ -20,6 +22,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(routes)
 app.use('/posts', postRoutes)
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000')
-})
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(result => {
+    console.log('CONNECTED')
+    app.listen(3000)
+  })
+  .catch(err => {
+    console.log(err)
+  })
