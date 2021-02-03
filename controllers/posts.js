@@ -5,5 +5,13 @@ exports.getNewPostForm = (req, res, next) => {
 }
 
 exports.newPost = (req, res, next) => {
-  return res.redirect('/posts')
+  const post = new Post(req.body)
+  console.log(`New post: ${post}`)
+  post.save()
+    .then(result => {
+      return res.redirect('/')
+    })
+    .catch(err => {
+      throw err.message
+    })
 }
