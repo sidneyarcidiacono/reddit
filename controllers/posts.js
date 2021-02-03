@@ -14,3 +14,13 @@ exports.newPost = (req, res, next) => {
       throw err.message
     })
 }
+
+exports.getPostDetails = (req, res, next) => {
+  Post.findById(req.params.id).lean()
+    .then(post => {
+      res.render('posts/posts-show', { post })
+    })
+    .catch(err => {
+      throw err.message
+    })
+}
