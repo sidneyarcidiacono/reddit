@@ -1,3 +1,5 @@
+const Post = require('../models/post')
+
 exports.getNewPostForm = (req, res, next) => {
   return res.render('posts/new-post')
 }
