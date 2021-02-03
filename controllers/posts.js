@@ -6,7 +6,6 @@ exports.getNewPostForm = (req, res, next) => {
 
 exports.newPost = (req, res, next) => {
   const post = new Post(req.body)
-  console.log(`New post: ${post}`)
   post.save()
     .then(result => {
       return res.redirect('/')
