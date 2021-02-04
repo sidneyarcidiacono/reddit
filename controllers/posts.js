@@ -16,7 +16,7 @@ exports.newPost = (req, res, next) => {
 }
 
 exports.getPostDetails = (req, res, next) => {
-  Post.findById(req.params.id).lean()
+  Post.findById(req.params.id).lean().populate('comments')
     .then(post => {
       res.render('posts/posts-show', { post })
     })
