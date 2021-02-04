@@ -9,6 +9,7 @@ const handlebars = require('express-handlebars')
 
 const routes = require('./routes/main')
 const postRoutes = require('./routes/posts')
+const subredditRoutes = require('./routes/subreddit')
 
 const app = express()
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(routes)
 app.use('/posts', postRoutes)
+app.use('/n', subredditRoutes)
 
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

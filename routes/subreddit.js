@@ -3,10 +3,6 @@ const router = express.Router()
 
 const postController = require('../controllers/posts')
 
-router.post('/new', postController.newPost)
-
-router.get('/new', postController.getNewPostForm)
-
-router.get('/:id', postController.getPostDetails)
+router.get('/:subreddit', postController.getBySubreddit)
 
 module.exports = router

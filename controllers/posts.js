@@ -24,3 +24,13 @@ exports.getPostDetails = (req, res, next) => {
       throw err.message
     })
 }
+
+exports.getBySubreddit = (req, res, next) => {
+  Post.find({ subreddit: req.params.subreddit }).lean()
+    .then(posts => {
+      res.render("posts/posts-index", { posts })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
