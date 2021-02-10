@@ -7,6 +7,9 @@ const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
 const handlebars = require('express-handlebars')
 
+const cookieParser = require('cookie-parser')
+const jwt = require('jsonwebtoken')
+
 const routes = require('./routes/main')
 const postRoutes = require('./routes/posts')
 const subredditRoutes = require('./routes/subreddit')
@@ -22,6 +25,8 @@ app.engine('hbs', handlebars({
   extname: 'hbs',
   defaultLayout: 'main'
 }))
+
+app.use(cookieParser())
 
 app.use(bodyParser.urlencoded({extended: false}))
 // Dani - I'm using a newer version of express-validator & you don't need to call use() like you used to :)
