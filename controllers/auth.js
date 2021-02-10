@@ -18,3 +18,8 @@ exports.signup = (req, res, next) => {
       res.status(400).send({ err: err })
     })
 }
+
+exports.logout = (req, res, next) => {
+  res.clearCookie('nToken')
+  res.redirect('/')
+}
