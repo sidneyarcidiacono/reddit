@@ -10,6 +10,9 @@ exports.showLogin = (req, res, next) => {
 }
 
 exports.signup = (req, res, next) => {
+  if (req.body.confirmPassword != req.body.password) {
+    throw new Error("Passwords do not match.")
+  }
   const user = new User(req.body)
   user.save()
     .then(user => {
