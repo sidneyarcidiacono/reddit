@@ -18,6 +18,7 @@ const postRoutes = require('./routes/posts')
 const subredditRoutes = require('./routes/subreddit')
 const commentRoutes = require('./routes/comment')
 const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
 
 const app = express()
 
@@ -52,6 +53,7 @@ app.use(checkAuth)
 app.use(routes)
 app.use('/posts', postRoutes)
 app.use('/n', subredditRoutes)
+app.use('/users', userRoutes)
 app.use(commentRoutes)
 app.use(authRoutes)
 

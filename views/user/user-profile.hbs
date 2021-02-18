@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3 m-auto">
+    <h3>{{user.username}}</h3>
+    {{#each user.posts}}
+      <a href="{{this.url}}" class="lead">{{this.title}}</a>
+      <p>{{this.author.username}}</p>
+      <p>{{this.summary}}</p>
+    {{/each}}
+  </div>
+</div>

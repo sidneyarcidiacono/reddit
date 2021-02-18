@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3 m-auto">
     <a href="{{post.url}}" class="lead">{{post.title}}</a>
-    <p>{{post.author.username}}</p>
+    <a href="/users/{{post.author._id}}" class="lead"><p>{{post.author.username}}</p></a>
     <p>{{post.summary}}</p>
     <form action="/posts/{{post._id}}/comments" method="post">
       <textarea class='form-control' name="content" placeholder="Comment"></textarea>
@@ -10,7 +10,7 @@
       </div>
     </form>
     {{#each post.comments}}
-    <p>{{this.author.username}}</p>
+    <a href="/users/{{this.author._id}}">{{this.author.username}}</a>
     <p>{{this.content}}</p>
     {{/each}}
   </div>
