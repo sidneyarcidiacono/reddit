@@ -32,6 +32,19 @@ app.use(bodyParser.urlencoded({extended: false}))
 // Dani - I'm using a newer version of express-validator & you don't need to call use() like you used to :)
 app.use(express.static(path.join(__dirname, 'public')))
 
+const checkAuth = (req, res, next) => {
+  if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
+    req.user = null
+  } else {
+    const token = req.cookies.nToken
+    const decodedToken = jwt.decode(token, { complete: true }) || {}
+    req.user = decodedToken.payload
+  }
+
+  next()
+}
+app.use(checkAuth)
+
 app.use(routes)
 app.use('/posts', postRoutes)
 app.use('/n', subredditRoutes)
@@ -48,6 +61,6 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     throw err.message
   })
 
-mongoose.set('debug', true)
+// mongoose.set('debug', true)
 
 module.exports = app

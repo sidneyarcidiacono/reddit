@@ -1,11 +1,13 @@
 const Post = require('../models/post')
 
 exports.index = (req, res, next) => {
-  Post.find().lean()
-   .then(posts => {
-     return res.render('posts/posts-index', { posts } )
-   })
-   .catch(err => {
-     throw err.message
-   })
+  const currentUser = req.user
+
+  Post.find({})
+    .then(posts => {
+      res.render("posts/posts-index", { posts, currentUser })
+    })
+    .catch(err => {
+      console.log(err.message)
+    })
 }
