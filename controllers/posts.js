@@ -25,7 +25,7 @@ exports.newPost = (req, res, next) => {
 exports.getPostDetails = (req, res, next) => {
   const currentUser = req.user._id
 
-  Post.findById(req.params.id).lean().populate('comments').populate('author')
+  Post.findById(req.params.id).lean().populate({path:'comments', populate: {path: 'author'}}).populate('author')
     .then(post => {
       res.render('posts/posts-show', { post, currentUser })
     })
