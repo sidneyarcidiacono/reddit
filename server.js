@@ -1,7 +1,10 @@
 require('dotenv').config()
 const path = require('path')
 
-const express = require('express')
+const express = require('express'),
+    _handlebars = require('handlebars'),
+    expressHandlebars = require('express-handlebars'),
+    {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const bodyParser = require('body-parser')
 const expressValidator = require('express-validator')
 const mongoose = require('mongoose')
@@ -23,7 +26,8 @@ app.engine('hbs', handlebars({
   layoutsDir: path.join(__dirname, '/views/layouts/'),
   partialsDir: path.join(__dirname, '/views/partials/'),
   extname: 'hbs',
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  handlebars: allowInsecurePrototypeAccess(_handlebars)
 }))
 
 app.use(cookieParser())

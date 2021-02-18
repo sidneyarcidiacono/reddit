@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/sidneyarcidiacono/reddit#readme",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.3",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",

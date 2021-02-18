@@ -1,4 +1,5 @@
 const Post = require('../models/post')
+const User = require('../models/user')
 
 exports.getNewPostForm = (req, res, next) => {
   return res.render('posts/new-post')
@@ -6,9 +7,15 @@ exports.getNewPostForm = (req, res, next) => {
 
 exports.newPost = (req, res, next) => {
   const post = new Post(req.body)
+  post.author = req.user._id
   post.save()
-    .then(result => {
-      return res.redirect('/')
+    .then(post => {
+      return User.findById(req.user._id)
+    })
+    .then(user => {
+      user.posts.unshift(post)
+      user.save()
+      res.redirect(`/posts/${post._id}`)
     })
     .catch(err => {
       throw err.message
@@ -16,9 +23,11 @@ exports.newPost = (req, res, next) => {
 }
 
 exports.getPostDetails = (req, res, next) => {
-  Post.findById(req.params.id).lean().populate('comments')
+  const currentUser = req.user._id
+
+  Post.findById(req.params.id).lean().populate('comments').populate('author')
     .then(post => {
-      res.render('posts/posts-show', { post })
+      res.render('posts/posts-show', { post, currentUser })
     })
     .catch(err => {
       throw err.message
@@ -26,9 +35,11 @@ exports.getPostDetails = (req, res, next) => {
 }
 
 exports.getBySubreddit = (req, res, next) => {
-  Post.find({ subreddit: req.params.subreddit }).lean()
+  const currentUser = req.user._id
+
+  Post.find({ subreddit: req.params.subreddit }).lean().populate('author')
     .then(posts => {
-      res.render("posts/posts-index", { posts })
+      res.render("posts/posts-index", { posts, currentUser })
     })
     .catch(err => {
       console.log(err)
