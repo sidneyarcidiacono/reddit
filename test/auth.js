@@ -16,14 +16,18 @@ describe("User", function() {
     done()
   })
   })
-})
 
 // signup
 it("should be able to signup", function(done) {
+  let newTestUser = new User({
+    username: "testone",
+    password: "password",
+    confirmPassword: "password"
+  })
   User.findOneAndRemove({ username: "testone" }, function() {
     agent
     .post("/sign-up")
-    .send({ username: "testone", password: "password", confirmPassword: "password" })
+    .send(newTestUser)
     .end(function(err, res) {
       console.log(res.body)
       res.should.have.status(200)
@@ -35,4 +39,5 @@ it("should be able to signup", function(done) {
 
 after(function () {
   agent.close()
+})
 })

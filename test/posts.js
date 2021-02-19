@@ -1,9 +1,9 @@
-const app = require("./../server")
 const chai = require("chai")
 const chaiHttp = require("chai-http")
 const expect = chai.expect
 
 const Post = require('../models/post')
+const User = require('../models/user')
 const server = require('../server')
 
 chai.should()
@@ -11,6 +11,32 @@ chai.use(chaiHttp)
 
 // Agent that will keep track of our cookies
 const agent = chai.request.agent(server)
+
+const newPost = {
+  title: "testpost",
+  url: "https://searx.be",
+  summary: "a summary",
+  author: "aaaaaaaaaaaa"
+}
+
+const user = {
+  username: 'poststest',
+  password: 'testposts',
+  confirmPassword: 'testposts'
+}
+
+before(function (done) {
+agent
+  .post('/sign-up')
+  .set("content-type", "application/x-www-form-urlencoded")
+  .send(user)
+  .then(function (res) {
+    done()
+  })
+  .catch(function (err) {
+    done(err)
+  })
+})
 
 it('Should create with valid attributes at POST /posts/new', function(done) {
   // Checks how many posts there are now
@@ -22,14 +48,7 @@ it('Should create with valid attributes at POST /posts/new', function(done) {
             // since we're not actually filling out a form
             .set("content-type", "application/x-www-form-urlencoded")
             // Make a request to create another
-            .send({
-              title: "TestPost",
-              url: "http://localhost:3000",
-              summary: "A test post",
-              subreddit: "n/new",
-              comments: [],
-              author: "aaaaaaaaaaaa"
-            })
+            .send(newPost)
             .then(function (res) {
                 Post.estimatedDocumentCount()
                     .then(function (newDocCount) {
@@ -52,6 +71,23 @@ it('Should create with valid attributes at POST /posts/new', function(done) {
     })
 })
 
-after(function () {
-  Post.findOneAndDelete({title: "TestPost"});
+
+after(function (done) {
+  Post.findOneAndDelete(newPost)
+    .then(function (res) {
+      agent.close()
+
+  User.findOneAndDelete({
+    username: user.username
+  })
+  .then(function (res) {
+    done()
+  })
+  .catch(function (err) {
+    done(err)
+  })
+})
+.catch(function (err) {
+  done(err)
+})
 })
