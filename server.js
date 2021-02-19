@@ -42,8 +42,11 @@ const checkAuth = (req, res, next) => {
     req.user = null
   } else {
     const token = req.cookies.nToken
+    console.log(`token: ${token}`)
     const decodedToken = jwt.decode(token, { complete: true }) || {}
+    console.log(`decodedToken: ${decodedToken}`)
     req.user = decodedToken.payload
+    console.log(`req.user: ${req.user.username}`)
   }
 
   next()
