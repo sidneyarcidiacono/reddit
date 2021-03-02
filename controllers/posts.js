@@ -25,7 +25,7 @@ exports.newPost = (req, res, next) => {
 exports.getPostDetails = (req, res, next) => {
   const currentUser = req.user._id
 
-  Post.findById(req.params.id).lean().populate({path:'comments', populate: {path: 'author'}}).populate('author')
+  Post.findById(req.params.id).populate('comments').lean()
     .then(post => {
       res.render('posts/posts-show', { post, currentUser })
     })
@@ -37,7 +37,7 @@ exports.getPostDetails = (req, res, next) => {
 exports.getBySubreddit = (req, res, next) => {
   const currentUser = req.user._id
 
-  Post.find({ subreddit: req.params.subreddit }).lean().populate('author')
+  Post.find({ subreddit: req.params.subreddit }).lean()
     .then(posts => {
       res.render("posts/posts-index", { posts, currentUser })
     })
