@@ -4,7 +4,8 @@ const Populate = require("../util/autopopulate");
 
 const Comment = new mongoose.Schema({
   content: { type: String, required: true },
-  author : { type: Schema.Types.ObjectId, ref: "User", required: true }
+  author : { type: Schema.Types.ObjectId, ref: "User", required: true },
+  comments: [{type: Schema.Types.ObjectId, ref: "Comment"}] 
 }, { timestamps: true })
 
 // Always populate the author field
