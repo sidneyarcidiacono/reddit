@@ -29,7 +29,6 @@ exports.newPost = (req, res, next) => {
 
 exports.upVote = (req, res, next) => {
   // Up vote a post
-  console.log(`req.params.id from upvote: ${req.params.id}`)
   Post.findById(req.params.id).exec(function(err, post) {
     post.upVotes.push(req.user._id)
     post.voteScore = post.voteScore + 1
