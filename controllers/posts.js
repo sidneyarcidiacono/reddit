@@ -2,7 +2,8 @@ const Post = require('../models/post')
 const User = require('../models/user')
 
 exports.getNewPostForm = (req, res, next) => {
-  return res.render('posts/new-post')
+  const currentUser = req.user
+  return res.render('posts/new-post', { currentUser })
 }
 
 exports.newPost = (req, res, next) => {
