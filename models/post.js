@@ -7,6 +7,9 @@ const Post = new mongoose.Schema({
   url: { type: String, required: true },
   summary: { type: String, required: true },
   subreddit: { type: String, required: true },
+  upVotes : [{ type: Schema.Types.ObjectId, ref: "User"}],
+  downVotes : [{ type: Schema.Types.ObjectId, ref: "User"}],
+  voteScore : {type: Number},
   comments: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' } ],
   author : { type: Schema.Types.ObjectId, ref: "User", required: true }
 }, { timestamps: true })

@@ -35,6 +35,7 @@ app.use(cookieParser())
 
 app.use(bodyParser.urlencoded({extended: false}))
 // Dani - I'm using a newer version of express-validator & you don't need to call use() like you used to :)
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 const checkAuth = (req, res, next) => {
