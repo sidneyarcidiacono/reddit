@@ -10,6 +10,8 @@ exports.showLogin = (req, res, next) => {
 }
 
 exports.signup = (req, res, next) => {
+  console.log(`ConfirmPassword: ${req.body.confirmPassword}`)
+  console.log(`password: ${req.body.password}`)
   if (req.body.confirmPassword != req.body.password) {
     throw new Error("Passwords do not match.")
   }
